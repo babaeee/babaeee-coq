@@ -1,12 +1,13 @@
 import fs from "fs";
 import { join } from "path";
 import { promisify } from "util";
-import { buildFolder } from "../paths.js";
+import { buildFolder, rootFolder } from "../paths.js";
 import { developmentCompiler } from "./compiler.js";
 import { serveDev } from "./serveDev.js";
 
 const rmdir = promisify(fs.rmdir);
 const mkdir = promisify(fs.mkdir);
+const symlink = promisify(fs.symlink);
 const writeFile = promisify(fs.writeFile);
 
 const dev = async () => {
@@ -27,6 +28,7 @@ const dev = async () => {
     }
     console.log(`Serving at http://localhost:${p}/`);
   });
+  symlink(join(rootFolder, 'node_modules'), join(buildFolder, 'node_modules'));
   serveDev(p);
 };
 

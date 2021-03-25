@@ -1,4 +1,21 @@
-.toolButton {
-  border-radius: 0.5rem;
+.toolContain {
+  width: 20%;
   float: left;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.8rem;
+  background-color: black;
+  justify-content: space-around;
+}
+
+.toolButton {
+  width: 25%;
+  height: 50px;
+  margin: 5px 1px;
+  font-size: medium;
+  border-radius: 0.5rem;
+  border-color: black;
+  background-color: #ff5050;
+  color: white;
 }

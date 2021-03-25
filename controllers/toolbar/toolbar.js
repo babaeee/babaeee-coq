@@ -9,10 +9,16 @@ export const ToolbarCtrl = class {
   }
 
   setupTemplate() {
-    this.el = createNode('div', '', [
-      createNode('button', css.toolButton , 'button1'),
-      createNode('button',css.toolButton ,'button2'),
-      createNode('button',css.toolButton,'button3'),
+    this.el = createNode('div', css.toolContain, [
+      createNode('button', css.toolButton , '1'),
+      createNode('button',css.toolButton ,'2'),
+      createNode('button',css.toolButton,'3'),
+      createNode('button',css.toolButton,'4'),
+      createNode('button',css.toolButton,'5'),
+      createNode('button',css.toolButton,'6'),
+      createNode('button',css.toolButton,'7'),
+      createNode('button',css.toolButton,'8'),
+      createNode('button',css.toolButton,'9'),
     ]);
   }
 };

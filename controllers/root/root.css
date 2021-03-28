@@ -1,8 +1,19 @@
-.discription {
-  padding: 0 10px;
-  height: 15%;
-  background-color: black;
-  border-radius: 0.8rem;
+body {
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-grow: 1;
 }
 
 .title {

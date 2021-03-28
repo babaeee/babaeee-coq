@@ -1,20 +1,17 @@
 .toolContain {
-  margin-top: 100px;
-  left: 10px;
-  width: 20%;
-  padding: 5px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  position: absolute;
+  margin: 1rem;
+  padding: 1rem;
   border-radius: 0.8rem;
   background-color: black;
   justify-content: space-around;
 }
 
 .toolButton {
-  width: 25%;
-  height: 50px;
-  margin: 5px 1px;
+  width: 3rem;
+  height: 3rem;
   font-size: medium;
   border-radius: 0.5rem;
   border-color: black;

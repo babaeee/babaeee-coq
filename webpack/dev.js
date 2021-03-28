@@ -3,6 +3,7 @@ import { join } from "path";
 import { promisify } from "util";
 import { buildFolder, rootFolder } from "../paths.js";
 import { developmentCompiler } from "./compiler.js";
+import { html } from "./html.js";
 import { serveDev } from "./serveDev.js";
 
 const rmdir = promisify(fs.rmdir);
@@ -13,9 +14,7 @@ const writeFile = promisify(fs.writeFile);
 const dev = async () => {
   await rmdir(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
-  await writeFile(join(buildFolder, 'index.html'), `
-  <html><head></head><body><script src="/dist/bundle.js"></script></body></html>
-  `);
+  await writeFile(join(buildFolder, 'index.html'), html);
   const p = '32664';
   developmentCompiler.watch({
     ignores: /node_modules/,
@@ -23,9 +22,9 @@ const dev = async () => {
     if (err) {
       console.log(err);
     }
-    if (stats.hasErrors()) {
+    //if (stats.hasErrors()) {
       console.log(stats.toString({ colors: true }));
-    }
+    //}
     console.log(`Serving at http://localhost:${p}/`);
   });
   symlink(join(rootFolder, 'node_modules'), join(buildFolder, 'node_modules'));

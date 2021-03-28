@@ -1,9 +1,11 @@
 .toolContain {
+  margin-top: 100px;
+  left: 10px;
   width: 20%;
-  float: left;
   padding: 5px;
   display: flex;
   flex-wrap: wrap;
+  position: absolute;
   border-radius: 0.8rem;
   background-color: black;
   justify-content: space-around;

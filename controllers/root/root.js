@@ -10,9 +10,8 @@ export const RootCtrl = class {
   }
 
   setupTemplate() {
-    this.el = createNode('div', '', [
+    this.el = createNode('div', css.discription, [
       createNode('h1', css.title, g`babaeee_coq`),
-      createNode('br'),
       this.toolchild.el,
       createNode('button', {
         onclick: () => {

@@ -1,7 +1,27 @@
+.discription {
+  padding: 0 10px;
+  height: 15%;
+  background-color: black;
+  border-radius: 0.8rem;
+}
+
 .title {
-  color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  text-align: center;
+  color: white;
 }
 
 .changeLangButton {
-  border-radius: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  font-size: medium;
+  height: 30px;
+  border-radius: 0.5rem;
+  color: black;
+  background-color: white;
 }

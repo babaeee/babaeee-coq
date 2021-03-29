@@ -18,6 +18,7 @@ const build = async () => {
   console.log('Build html...');
   await writeFile(join(buildFolder, "index.html"), html);
   await writeFile(join(buildFolder, "CNAME"), 'proof.babaeee.ir');
+  await writeFile(join(buildFolder, ".nojekyll"), '');
   const p = "32664";
   console.log('Webpack js and css...');
   const success = await new Promise((res) =>

@@ -21,7 +21,13 @@ const config = (mode) => ({
           'style-loader',
           {
             loader: 'css-loader',
-            options: { modules: true, url: false },
+            options: {
+              modules: { 
+                auto: (x) => { return !x.endsWith('.notmodule.css'); },
+                localIdentName: '[contenthash:base64]'
+              },
+              url: false,
+            },
           },
         ],
       },

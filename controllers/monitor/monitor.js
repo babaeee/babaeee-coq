@@ -22,6 +22,7 @@ export const MonitorCtrl = class {
   update(goals) {
     this.body.innerHTML = '';
     this.loading = false;
+    this.body.dir = 'ltr';
     for (const x of this.pprint.goals2DOM(goals)) {
       this.body.appendChild(x);
     }

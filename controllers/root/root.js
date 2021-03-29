@@ -10,7 +10,10 @@ export const RootCtrl = class {
     this.toolbar = new ToolbarCtrl();
     this.monitor = new MonitorCtrl();
     this.setupTemplate();
-    coqManager({
+  }
+
+  async initCoq() {
+    this.coq = await coqManager({
       onNewGoal: (goal) => {
         this.monitor.update(goal);
       },

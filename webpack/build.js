@@ -41,7 +41,7 @@ const build = async () => {
     process.exit(1);
   }
   console.log('Copying jscoq dependencies...');
-  const jscoqLibs = ['jscoq', 'jquery', 'codemirror', 'jszip'];
+  const jscoqLibs = ['jscoq', 'jquery', 'codemirror', 'jszip', 'localforage'];
   await Promise.all(jscoqLibs.map((l)=>copy(
     join(rootFolder, "node_modules", l),
     join(buildFolder, "node_modules", l),

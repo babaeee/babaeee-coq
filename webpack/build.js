@@ -4,6 +4,7 @@ import { promisify } from "util";
 import { buildFolder, rootFolder } from "../paths.js";
 import { productionCompiler } from "./compiler.js";
 import fsExtra from "fs-extra";
+import { html } from "./html.js";
 
 const { copy } = fsExtra;
 const rmdir = promisify(fs.rmdir);
@@ -15,12 +16,8 @@ const build = async () => {
   await rmdir(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
   console.log('Build html...');
-  await writeFile(
-    join(buildFolder, "index.html"),
-    `
-  <html><head></head><body><script src="/dist/bundle.js"></script></body></html>
-  `
-  );
+  await writeFile(join(buildFolder, "index.html"), html);
+  await writeFile(join(buildFolder, "CNAME"), 'proof.babaeee.ir');
   const p = "32664";
   console.log('Webpack js and css...');
   const success = await new Promise((res) =>

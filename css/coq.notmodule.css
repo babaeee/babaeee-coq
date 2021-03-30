@@ -5,3 +5,8 @@
 .constr\.notation {
   color: #ff5555 !important;
 }
+
+.coq-hypothesis > label {
+  background-color: orange;
+  border-radius: .4rem;
+}

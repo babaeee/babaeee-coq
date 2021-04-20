@@ -3,21 +3,13 @@ import { g, changeLang } from "../../i18n/index.js";
 import { ToolbarCtrl } from "../toolbar/toolbar.js";
 import { MonitorCtrl } from "../monitor/monitor.js";
 import css from "./root.css";
-import { coqManager } from "../../util/coq.js";
+import { coqManager } from "../../util/coq/index.js";
 
 export const RootCtrl = class {
   constructor() {
-    this.toolbar = new ToolbarCtrl();
+    this.toolbar = new ToolbarCtrl(this);
     this.monitor = new MonitorCtrl();
     this.setupTemplate();
-  }
-
-  async initCoq() {
-    this.coq = await coqManager({
-      onNewGoal: (goal) => {
-        this.monitor.update(goal);
-      },
-    });
   }
 
   setupTemplate() {

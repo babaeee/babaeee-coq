@@ -2,13 +2,14 @@ import { createNode } from "../../util/dom.js";
 import { g } from "../../i18n/index.js";
 import css from "./monitor.css";
 import { delay } from "../../util/other.js";
+import { goalsToDOM, subscribe } from "../../util/coq/index.js";
 
 
 export const MonitorCtrl = class {
   constructor() {
     this.loading = true;
     this.setupTemplate();
-    this.pprint = new FormatPrettyPrint();
+    subscribe('goal', (goal) => this.update(goal));
   }
 
   async runLoadingTimer() {
@@ -23,7 +24,7 @@ export const MonitorCtrl = class {
     this.body.innerHTML = '';
     this.loading = false;
     this.body.dir = 'ltr';
-    for (const x of this.pprint.goals2DOM(goals)) {
+    for (const x of goalsToDOM(goals)) {
       this.body.appendChild(x);
     }
   }

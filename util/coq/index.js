@@ -1,8 +1,27 @@
-export const coqInit = async () => {
-  await window.JsCoq.load();
+let globalObj = {};
+
+let subscribers = {
+  goal: [],
 };
 
-export const coqManager = async ({ onNewGoal = () => {} }) => {
+let pprint;
+let readyPromise;
+
+export const goalsToDOM = (goals) => {
+  return pprint.goals2DOM(goals);
+};
+
+export const subscribe = (e, f) => {
+  subscribers[e].push(f);
+};
+
+const emit = (e, v) => {
+  for (const f of subscribers[e]) {
+    f(v);
+  }
+};
+
+export const coqManager = async () => {
   const Observer = class {
     constructor() {
       this.when_ready = new Promise((resolve) => (this._ready = resolve));
@@ -13,7 +32,7 @@ export const coqManager = async ({ onNewGoal = () => {} }) => {
     coqGoalInfo(sid, goals) {
       var bar = `\n${"-".repeat(60)}\n`;
       console.log(bar, goals, bar);
-      onNewGoal(goals);
+      emit('goal', goals);
     }
     coqFeedback(...args) {
       console.log(...args);
@@ -91,10 +110,21 @@ export const coqManager = async ({ onNewGoal = () => {} }) => {
   return { coq, sid: 1 };
 };
 
-export const addSentece = async (obj, sentence) => {
-  obj.sid += 1;
-  const coq = obj.coq;
-  coq.add(obj.sid - 1, obj.sid, sentence);
-  await coq.execPromise(obj.sid);
-  coq.goals(obj.sid);
+export const coqInit = () => {
+  if (readyPromise) return readyPromise;
+  const f = async () => {
+    await window.JsCoq.load();
+    pprint = new FormatPrettyPrint();
+    globalObj = await coqManager();
+  };
+  readyPromise = f();
+  return readyPromise;
+};
+
+export const addSentece = async (sentence) => {
+  globalObj.sid += 1;
+  const coq = globalObj.coq;
+  coq.add(globalObj.sid - 1, globalObj.sid, sentence);
+  await coq.execPromise(globalObj.sid);
+  coq.goals(globalObj.sid);
 };

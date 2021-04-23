@@ -21,12 +21,12 @@ export const coqHypothesis = () => {
 
         $('.coq-env > div')
           .css('border', '1.5px dashed #ffffffaa');
-        target
-          .style.transform = `translateY(${newY}px) scale(1.015)`;
-        target
-          .style.boxShadow = '0px 0px 20px 6px #ffffff40';
-        target
-          .style.border = '';
+        $(target).css({
+          'transform': `translateY(${newY}px) scale(1.02)`,
+          'box-shadow': '0px 0px 20px 6px #ffffff40',
+          'border': '',
+          'transition': ''
+        });
 
         target.setAttribute('data-x', newX);
         target.setAttribute('data-y', newY);
@@ -34,8 +34,11 @@ export const coqHypothesis = () => {
       onend: function(event) {
         const target = event.target;
         $('.coq-env > div').css('border', '');
-        target.style.transform = '';
-        target.style.boxShadow = '';
+        $(target).css({
+          'transition': '.5s all',
+          'transform': '',
+          'box-shadow': ''
+        });
         target.removeAttribute('data-x');
         target.removeAttribute('data-y');
       }

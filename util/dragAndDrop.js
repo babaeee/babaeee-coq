@@ -1,5 +1,6 @@
 import interact from 'interactjs';
 import { addSentece } from "./coq/index.js";
+import $ from "jquery";
 
 export const coqHypothesis = () => {
   interact('.coq-env > div')
@@ -18,12 +19,25 @@ export const coqHypothesis = () => {
         const newX = initialX + deltaX;
         const newY = initialY + deltaY;
 
+        $('.coq-env > div')
+          .css('border', '1.5px dashed #ffffffaa');
         target
-          .style
-          .transform = `translateY(${newY}px)`;
+          .style.transform = `translateY(${newY}px) scale(1.015)`;
+        target
+          .style.boxShadow = '0px 0px 20px 6px #ffffff40';
+        target
+          .style.border = '';
 
         target.setAttribute('data-x', newX);
         target.setAttribute('data-y', newY);
+      },
+      onend: function(event) {
+        const target = event.target;
+        $('.coq-env > div').css('border', '');
+        target.style.transform = '';
+        target.style.boxShadow = '';
+        target.removeAttribute('data-x');
+        target.removeAttribute('data-y');
       }
     });
   interact('.coq-env > div')
@@ -40,10 +54,6 @@ export const coqHypothesis = () => {
           addSentece(`apply ${first}.`);
         else
           addSentece(`apply ${first} in ${second}.`);
-
-        // alert(first
-        //       + ' was dropped into '
-        //       + second);
       }
     });
 };

@@ -20,7 +20,7 @@ export const coqHypothesis = () => {
 
         target
           .style
-          .transform = `translate(${newX}px, ${newY}px)`;
+          .transform = `translateY(${newY}px)`;
 
         target.setAttribute('data-x', newX);
         target.setAttribute('data-y', newY);

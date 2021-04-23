@@ -10,6 +10,7 @@ export const MonitorCtrl = class {
     this.loading = true;
     this.setupTemplate();
     subscribe('goal', (goal) => this.update(goal));
+    coqHypothesis();
   }
 
   async runLoadingTimer() {
@@ -27,7 +28,6 @@ export const MonitorCtrl = class {
     for (const x of goalsToDOM(goals)) {
       this.body.appendChild(x);
     }
-    coqHypothesis();
   }
 
   setupTemplate() {

@@ -121,14 +121,10 @@ export const coqInit = () => {
   return readyPromise;
 };
 
-var lastTime = Date.now();
 export const addSentece = async (sentence) => {
-  if (Date.now() - lastTime > 100) {
-    lastTime = Date.now();
-    globalObj.sid += 1;
-    const coq = globalObj.coq;
-    coq.add(globalObj.sid - 1, globalObj.sid, sentence);
-    await coq.execPromise(globalObj.sid);
-    coq.goals(globalObj.sid);
-  }
+  globalObj.sid += 1;
+  const coq = globalObj.coq;
+  coq.add(globalObj.sid - 1, globalObj.sid, sentence);
+  await coq.execPromise(globalObj.sid);
+  coq.goals(globalObj.sid);
 };

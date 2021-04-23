@@ -6,6 +6,14 @@
   color: #ff5555 !important;
 }
 
+.coq-env > div {
+  touch-action: none;
+  user-select: none;
+  display: block !important;
+  padding: 10px;
+  margin: 5px;
+}
+
 .coq-hypothesis > label {
   background-color: orange;
   border-radius: .4rem;

@@ -3,7 +3,7 @@ import { g } from "../../i18n/index.js";
 import css from "./monitor.css";
 import { delay } from "../../util/other.js";
 import { goalsToDOM, subscribe } from "../../util/coq/index.js";
-
+import { coqHypothesis } from "../../util/dragAndDrop.js";
 
 export const MonitorCtrl = class {
   constructor() {
@@ -27,6 +27,7 @@ export const MonitorCtrl = class {
     for (const x of goalsToDOM(goals)) {
       this.body.appendChild(x);
     }
+    coqHypothesis();
   }
 
   setupTemplate() {

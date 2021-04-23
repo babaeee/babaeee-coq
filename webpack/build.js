@@ -16,7 +16,6 @@ const build = async () => {
   await rmdir(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
   console.log('Build html...');
-  await writeFile(join(buildFolder, "index.html"), html);
   await writeFile(join(buildFolder, "CNAME"), 'proof.babaeee.ir');
   await writeFile(join(buildFolder, ".nojekyll"), '');
   const p = "32664";

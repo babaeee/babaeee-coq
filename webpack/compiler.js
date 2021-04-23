@@ -3,6 +3,7 @@ import { join } from "path";
 import { rootFolder } from "../paths.js";
 import { buildFolder } from "../paths.js";
 import ErrorOverlayPlugin from "error-overlay-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const config = (mode) => ({
   mode,
@@ -42,10 +43,15 @@ const config = (mode) => ({
   },
   output: {
     path: join(buildFolder, 'dist'),
+    filename: 'app.[contenthash].js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new ErrorOverlayPlugin(),
+    new HtmlWebpackPlugin({
+      template: join(rootFolder, 'index.html'),
+      filename: join(buildFolder, 'index.html'),
+    }),
   ],
   devtool: 'cheap-module-source-map',
 });

@@ -14,7 +14,6 @@ const writeFile = promisify(fs.writeFile);
 const dev = async () => {
   await rmdir(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
-  await writeFile(join(buildFolder, 'index.html'), html);
   const p = '32664';
   developmentCompiler.watch({
     ignores: /node_modules/,

@@ -12,6 +12,12 @@
   flex-grow: 1;
 }
 
+.sidebarContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .title {
   display: flex;
   justify-content: center;

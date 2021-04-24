@@ -2,10 +2,12 @@ let globalObj = {};
 
 let subscribers = {
   goal: [],
+  history: [],
 };
 
 let pprint;
 let readyPromise;
+let history = [];
 
 export const goalsToDOM = (goals) => {
   return pprint.goals2DOM(goals);
@@ -19,6 +21,11 @@ const emit = (e, v) => {
   for (const f of subscribers[e]) {
     f(v);
   }
+};
+
+const pushHistory = (sentence) => {
+  history.push(sentence);
+  emit('history', history);
 };
 
 export const coqManager = async () => {
@@ -122,6 +129,7 @@ export const coqInit = () => {
 };
 
 export const addSentece = async (sentence) => {
+  pushHistory(sentence);
   globalObj.sid += 1;
   const coq = globalObj.coq;
   coq.add(globalObj.sid - 1, globalObj.sid, sentence);

@@ -16,8 +16,3 @@
   border-radius: 10px;
   border: 1.5px solid #1e1e1e;
 }
-
-.coq-hypothesis > label {
-  background-color: orange;
-  border-radius: .4rem;
-}

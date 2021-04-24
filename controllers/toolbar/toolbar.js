@@ -1,7 +1,7 @@
 import { createNode } from "../../util/dom.js";
 import { g, changeLang } from "../../i18n/index.js";
 import css from "./toolbar.css";
-import { addSentece } from "../../util/coq/index.js";
+import { addSentece, reset } from "../../util/coq/index.js";
 
 export const ToolbarCtrl = class {
   constructor(parent) {
@@ -17,8 +17,16 @@ export const ToolbarCtrl = class {
           const s = window.prompt('Your sentence:');
           await addSentece(s);
         },
-      }, "1"),
-      createNode("button", css.toolButton, "2"),
+      }, "CT"),
+      createNode("button", {
+        className: css.toolButton,
+        onclick: async () => {
+          const s = window.prompt('Your goal:');
+          reset();
+          await addSentece(`Goal (${s}).`);
+          await addSentece(`intros.`);
+        },
+      }, "R"),
       createNode("button", css.toolButton, "3"),
       createNode("button", css.toolButton, "4"),
       createNode("button", css.toolButton, "5"),

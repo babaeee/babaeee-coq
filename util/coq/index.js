@@ -1,8 +1,9 @@
+import { createNode } from "../dom.js";
+
 let globalObj = {};
 
 let subscribers = {
-  goal: [],
-  history: [],
+  goal: [], history: [], exn: [],
 };
 
 let pprint;
@@ -10,8 +11,13 @@ let readyPromise;
 let history = [];
 
 export const goalsToDOM = (goals) => {
+  if (!goals) return [createNode('div', {}, 'error')];
   return pprint.goals2DOM(goals);
 };
+
+export const ppToDOM = (pp) => {
+  return pprint.pp2DOM(pp);
+}
 
 export const subscribe = (e, f) => {
   subscribers[e].push(f);
@@ -44,8 +50,14 @@ export const coqManager = async () => {
     coqFeedback(...args) {
       console.log(...args);
     }
-    coqCoqExn(...args) {
-      alert(args[2]);
+    coqCoqExn(loc, sids, msg) {
+      emit('exn', msg);
+      if (!sids) return;
+      const [sid] = sids;
+      globalObj.sid = sid;
+      globalObj.coq.cancel(sid+1);
+      history.pop();
+      emit('history', history);
     }
     coqPending(nsid, prefix, module_names) {
       //let stm = this.doc.stm_id[nsid];
@@ -135,4 +147,11 @@ export const addSentece = async (sentence) => {
   coq.add(globalObj.sid - 1, globalObj.sid, sentence);
   await coq.execPromise(globalObj.sid);
   coq.goals(globalObj.sid);
+};
+
+export const reset = () => {
+  history = [];
+  globalObj.coq.cancel(1);
+  globalObj.sid = 1;
+  emit('history', history);
 };

@@ -7,13 +7,13 @@ import fsExtra from "fs-extra";
 import { html } from "./html.js";
 
 const { copy } = fsExtra;
-const rmdir = promisify(fs.rmdir);
+const rm = promisify(fs.rm);
 const mkdir = promisify(fs.mkdir);
 const symlink = promisify(fs.symlink);
 const writeFile = promisify(fs.writeFile);
 
 const build = async () => {
-  await rmdir(buildFolder, { recursive: true });
+  await rm(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
   console.log('Build html...');
   await writeFile(join(buildFolder, "CNAME"), 'proof.babaeee.ir');

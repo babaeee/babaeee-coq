@@ -6,13 +6,13 @@ import { developmentCompiler } from "./compiler.js";
 import { html } from "./html.js";
 import { serveDev } from "./serveDev.js";
 
-const rmdir = promisify(fs.rmdir);
+const rm = promisify(fs.rm);
 const mkdir = promisify(fs.mkdir);
 const symlink = promisify(fs.symlink);
 const writeFile = promisify(fs.writeFile);
 
 const dev = async () => {
-  await rmdir(buildFolder, { recursive: true });
+  await rm(buildFolder, { recursive: true });
   await mkdir(buildFolder, { recursive: true });
   const p = '32664';
   developmentCompiler.watch({

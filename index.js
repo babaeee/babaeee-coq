@@ -35,7 +35,7 @@ const main = async () => {
   await addSentece('Definition even (n:nat) := exists k, n = 2 * k.');
   await addSentece('Definition odd (n:nat) := exists k, n = 2 * k + 1.');
   
-  await addSentece('Lemma div2_even : forall n:nat, even n <-> n mod 2 = 0.');
+  await addSentece('Goal (forall n:nat, even n <-> exists k: nat, 2 * k = n).');
 /*  await addSentece('Proof. intros. split.');
   await addSentece('intros. destruct H.rewrite H.pose proof (Nat.mod_mul x 2).assert (2 <> 0).  auto. apply H0 in H1. clear H0.assert(x * 2 = 2 * x). exact (Nat.mul_comm x 2). rewrite H0 in H1.exact H1.');
   await addSentece('intros.pose proof (Nat.div_mod n 2). assert(2 <> 0). auto. apply H0 in H1. clear H0.rewrite H in H1.assert(2 * (n / 2) + 0 = 2 * (n / 2)).exact (Nat.add_0_r _).rewrite H0 in H1.exists(n / 2).  exact H1. Qed.');

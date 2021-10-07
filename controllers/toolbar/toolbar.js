@@ -23,8 +23,8 @@ export const ToolbarCtrl = class {
         onclick: async () => {
           const s = window.prompt('Your goal:');
           reset();
-          await addSentece(`Goal (${s}).`);
-          await addSentece(`intros.`);
+          await addSentece(`Goal (${s})`);
+          await addSentece(`intros`);
         },
       }, "R"),
       createNode("button", css.toolButton, "3"),

@@ -6,13 +6,14 @@ import { HistoryCtrl } from "../history/history.js";
 
 import css from "./root.css";
 import { coqManager } from "../../util/coq/index.js";
+import { LemmaCtrl } from "../lemma/lemma.js";
 
 export const RootCtrl = class {
   constructor() {
     this.toolbar = new ToolbarCtrl(this);
     this.monitor = new MonitorCtrl();
     this.history = new HistoryCtrl();
-    this.gav = new HistoryCtrl();
+    this.lemma = new LemmaCtrl();
     this.setupTemplate();
   }
 
@@ -32,8 +33,8 @@ export const RootCtrl = class {
         this.toolbar.el,
         this.monitor.el,
         createNode('div', css.sidebarContainer, [
-          this.gav.el,
           this.history.el,
+          this.lemma.el,
         ]),
       ]),
     ]);

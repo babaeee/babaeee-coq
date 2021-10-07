@@ -3,14 +3,13 @@ import { g } from "../../i18n/index.js";
 import css from "./monitor.css";
 import { delay } from "../../util/other.js";
 import { goalsToDOM, subscribe } from "../../util/coq/index.js";
-import { coqHypothesis } from "../../util/dragAndDrop.js";
+import { setup } from "./mouseEvents/setup.js";
 
 export const MonitorCtrl = class {
   constructor() {
     this.loading = true;
     this.setupTemplate();
     subscribe('goal', (goal) => this.update(goal));
-    coqHypothesis();
   }
 
   async runLoadingTimer() {
@@ -26,8 +25,10 @@ export const MonitorCtrl = class {
     this.loading = false;
     this.body.dir = 'ltr';
     for (const x of goalsToDOM(goals)) {
+      console.log('new goal', x);
       this.body.appendChild(x);
     }
+    setup();
   }
 
   setupTemplate() {

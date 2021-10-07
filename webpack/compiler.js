@@ -17,6 +17,10 @@ const config = (mode) => ({
         exclude: /node_modules/,
       },
       {
+        test: /\.v$/,
+        type: 'asset/source',
+      },
+      {
         test: /\.css$/i,
         use: [
           'style-loader',

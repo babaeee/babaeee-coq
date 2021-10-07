@@ -3,12 +3,13 @@ import { createNode } from "../dom.js";
 let globalObj = {};
 
 let subscribers = {
-  goal: [], history: [], exn: [],
+  goal: [], history: [], exn: [], lemma: [],
 };
 
 let pprint;
 let readyPromise;
 let history = [];
+let lemmas = [];
 
 export const goalsToDOM = (goals) => {
   if (!goals) return [createNode('div', {}, 'error')];
@@ -140,18 +141,27 @@ export const coqInit = () => {
   return readyPromise;
 };
 
-export const addSentece = async (sentence) => {
-  pushHistory(sentence);
+export const addSentece = async (sentence, options = {}) => {
+  if (!options.isLib) {
+    pushHistory(sentence);
+  }
   globalObj.sid += 1;
   const coq = globalObj.coq;
-  coq.add(globalObj.sid - 1, globalObj.sid, sentence);
+  coq.add(globalObj.sid - 1, globalObj.sid, sentence + '.');
   await coq.execPromise(globalObj.sid);
   coq.goals(globalObj.sid);
 };
 
+export const addLemmas = (list) => {
+  lemmas.push(...list);
+  emit('lemma', lemmas);
+};
+
 export const reset = () => {
   history = [];
+  lemmas = [];
   globalObj.coq.cancel(1);
   globalObj.sid = 1;
   emit('history', history);
+  emit('lemma', lemmas);
 };

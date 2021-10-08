@@ -51,7 +51,7 @@ const setupDragDrop = () => {
       $('.coq-env > div')
         .css('border', '1.5px dashed #ffffffaa');
       $(target).css({
-        'transform': `translateY(${newY}px) scale(1.02)`,
+        'transform': `translate(${newX}px, ${newY}px) scale(1.02)`,
         'box-shadow': '0px 0px 20px 6px #ffffff40',
         'border': '',
         'transition': ''

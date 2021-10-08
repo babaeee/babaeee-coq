@@ -25,14 +25,14 @@ export const init = () => {
 };
 
 export const getText = (id) => {
-  console.log(dict, id);
   return dict[id] || id;
 };
 
 export const g = (c, ...v) => {
   const t = c.map((x) => x.split(' ').map(getText).join(' '));
   v.push('');
-  return t.map((x, i) => x + v[i]).join('');
+  const r = t.map((x, i) => x + v[i]).join('');
+  return r;
 };
 
 init();

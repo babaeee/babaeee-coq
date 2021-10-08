@@ -12,7 +12,7 @@ const symlink = promisify(fs.symlink);
 const writeFile = promisify(fs.writeFile);
 
 const dev = async () => {
-  await rm(buildFolder, { recursive: true });
+  await rm(buildFolder, { recursive: true, force: true });
   await mkdir(buildFolder, { recursive: true });
   const p = '32664';
   developmentCompiler.watch({

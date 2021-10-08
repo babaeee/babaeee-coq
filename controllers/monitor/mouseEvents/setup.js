@@ -6,8 +6,11 @@ import { createMenu } from '../../../util/contextMenu/menu.js';
 import { g } from '../../../i18n/index.js';
 
 const recursiveClass = (elem) => {
+  if (!elem.className) {
+    return { tag: 'textNode', text: elem.textContent };
+  }
   const tag = elem.className;
-  const children = [...elem.children].map(recursiveClass);
+  const children = [...elem.childNodes].map(recursiveClass);
   if (children.length === 0) {
     return { tag, text: elem.innerText };
   }
@@ -20,6 +23,7 @@ const parseElem = (elem) => {
     return {
       type: 'hyp',
       label: l.innerText,
+      tree: recursiveClass(elem.querySelector('div')),
     };
   }
   return { type: 'goal', tree: recursiveClass(elem) };
@@ -151,7 +155,7 @@ const setupOnClick = () => {
     elem.addEventListener('dblclick', async () => {
       console.log('dblclick', p);
       if (p.type === 'goal') {
-        if (match(p.tree, [['forall']])) {
+        if (match(p.tree, [[['forall']]])) {
           return addSentece(`intros`);
         }
         if (match(p.tree, [_, '/\\'])) {
@@ -203,6 +207,10 @@ const setupOnClick = () => {
           },
         ];
       }
+      items.push({
+        label: 'print tree',
+        action: () => console.log(p),
+      });
       createMenu(items, elem, ev);
       ev.preventDefault();
     });

@@ -1,3 +1,4 @@
+import { isRTL } from "../../i18n/index.js";
 import css from "./menu.css";
 
 let menu;
@@ -15,6 +16,7 @@ document.body.addEventListener('click', () => {
 export const createMenu = (items, ele, e) => {
   removeMenu();
   menu = document.createElement('ul');
+  menu.dir = isRTL() ? 'rtl' : 'ltr';
   for (const item of items) {
     const li = document.createElement('li');
     li.innerText = item.label;

@@ -1,5 +1,6 @@
 babaeee_coq: اثبات چک کن ببعییی
 change_lang: تغییر زبان
+induction_on: استقرا روی
 loading: در حال بارگیری
 no_action_for_goal: اقدامی برای این نوع هدف تعریف نشده است
 tactic_intros: معرفی

@@ -6,23 +6,25 @@ import { createMenu } from '../../../util/contextMenu/menu.js';
 import { g } from '../../../i18n/index.js';
 
 const recursiveClass = (elem) => {
-  if (!elem.className) {
-    return { tag: 'textNode', text: elem.textContent };
+  if (!elem.tagName) {
+    return elem.textContent.trim();
   }
-  const tag = elem.className;
-  const children = [...elem.childNodes].map(recursiveClass);
+  const children = [...elem.childNodes].map(recursiveClass).filter((x) => x.length != 0);
   if (children.length === 0) {
-    return { tag, text: elem.innerText };
+    return elem.innerText.trim();
   }
-  return { tag, children };
+  if (children.length === 1) {
+    return children[0];
+  }
+  return children;
 };
 
 const parseElem = (elem) => {
-  let l = elem.querySelector('label');
-  if (l != null) {
+  let l = elem.querySelectorAll('label');
+  if (l.length !== 0) {
     return {
       type: 'hyp',
-      label: l.innerText,
+      label: [...l].map((x) => x.innerText),
       tree: recursiveClass(elem.querySelector('div')),
     };
   }
@@ -120,12 +122,21 @@ const setupDragDrop = () => {
     .dropzone({
       overlap: 0.2,
       ondrop: async (event) => {
+        if (event.relatedTarget.className === cssLemma.lemmaItem) {
+          const label = event.relatedTarget.innerText;
+          let second = parseElem(event.target);
+          if (second.type === 'goal')
+            await addSentece(`apply ${label}`);
+          else
+            await addSentece(`apply ${label} in ${second.label[0]}`);      
+          return;  
+        }
         let first = parseElem(event.relatedTarget);
         let second = parseElem(event.target);
         if (second.type === 'goal')
-          await addSentece(`apply ${first.label}`);
+          await addSentece(`apply ${first.label[0]}`);
         else
-          await addSentece(`apply ${first.label} in ${second.label}`);
+          await addSentece(`apply ${first.label[0]} in ${second.label[0]}`);
       }
     });
 };
@@ -134,12 +145,12 @@ const _ = { rule: 'everything' };
 
 const match = (tree, pattern) => {
   if (typeof pattern === 'string') {
-    return tree.text === pattern;
+    return tree === pattern;
   }
   if (pattern instanceof Array) {
-    if (!tree.children) return false;
+    if (!(tree instanceof Array)) return false;
     for (let i = 0; i < pattern.length; i += 1) {
-      if (!match(tree.children[i], pattern[i])) return false;
+      if (!match(tree[i], pattern[i])) return false;
     }
     return true;
   }
@@ -155,10 +166,10 @@ const setupOnClick = () => {
     elem.addEventListener('dblclick', async () => {
       console.log('dblclick', p);
       if (p.type === 'goal') {
-        if (match(p.tree, [[['forall']]])) {
+        if (match(p.tree, [['forall', _], _, _])) {
           return addSentece(`intros`);
         }
-        if (match(p.tree, [_, '/\\'])) {
+        if (match(p.tree, [_, '/\\', _])) {
           return addSentece(`constructor`);
         }
         return swal({
@@ -170,7 +181,7 @@ const setupOnClick = () => {
     elem.addEventListener('contextmenu', async (ev) => {
       let items = undefined;
       if (p.type === 'goal') {
-        if (match(p.tree, [_, '\\/'])) {
+        if (match(p.tree, [_, '\\/', _])) {
           items = [
             {
               label: g`tactic_left`,
@@ -200,12 +211,20 @@ const setupOnClick = () => {
           ];
         }
       } else {
-        items = [
-          {
-            label: g`hyp`,
-            action: () => {},
-          },
-        ];
+        if (match(p.tree, 'nat')) {
+          items = p.label.map((l) => ({
+            label: g`induction_on ${l}`,
+            action: () => addSentece(`induction ${l}`),
+          }));
+        }
+        if (!items) {
+          items = [
+            {
+              label: g`hyp`,
+              action: () => {},
+            },
+          ];
+        }
       }
       items.push({
         label: 'print tree',

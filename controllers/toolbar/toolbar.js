@@ -22,12 +22,23 @@ export const ToolbarCtrl = class {
         className: css.toolButton,
         onclick: async () => {
           const s = window.prompt('Your goal:');
+          if (s.trim() === '') {
+            window.localStorage.removeItem('history');
+            window.location.reload();
+            return;
+          }
           reset();
           await addSentece(`Goal (${s})`);
           await addSentece(`intros`);
         },
       }, "R"),
-      createNode("button", css.toolButton, "3"),
+      createNode("button", {
+        className: css.toolButton,
+        onclick: async () => {
+          const s = window.prompt(g`input_assertion`);
+          await addSentece(`assert (${s})`);
+        },
+      }, "A"),
       createNode("button", css.toolButton, "4"),
       createNode("button", css.toolButton, "5"),
       createNode("button", css.toolButton, "6"),

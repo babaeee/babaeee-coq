@@ -1,7 +1,7 @@
 import { createNode } from "../../util/dom.js";
 import { g } from "../../i18n/index.js";
 import css from "./lemma.css";
-import { subscribe } from "../../util/coq/index.js";
+import { addSentece, subscribe } from "../../util/coq/index.js";
 
 export const LemmaCtrl = class {
   constructor() {
@@ -12,7 +12,9 @@ export const LemmaCtrl = class {
   update(lemmas) {
     this.body.innerHTML = '';
     for (const x of lemmas) {
-      this.body.appendChild(createNode('span', css.lemmaItem, x));
+      const node = createNode('span', css.lemmaItem, x);
+      node.addEventListener('dblclick', () => addSentece(`pose proof ${x}`));
+      this.body.appendChild(node);
       this.body.appendChild(document.createTextNode(' '));
     }
   }

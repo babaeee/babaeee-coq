@@ -166,17 +166,30 @@ const setupOnClick = () => {
     elem.addEventListener('dblclick', async () => {
       console.log('dblclick', p);
       if (p.type === 'goal') {
-        if (match(p.tree, [['forall', _], _, _])) {
+        if (match(p.tree, [['∀', _], _, _])) {
           return addSentece(`intros`);
         }
-        if (match(p.tree, [_, '/\\', _])) {
+        if (match(p.tree, [_, '∧', _])) {
           return addSentece(`constructor`);
+        }
+        if (match(p.tree, ['~', _])) {
+          return addSentece(`unfold not; intros`);
         }
         return swal({
           text: g`no_action_for_goal`,
           icon: 'error',
         });
       }
+      if (match(p.tree, [['∃', _], _, _])) {
+        return addSentece(`destruct ${p.label[0]}`);
+      }
+      if (match(p.tree, [_, '∧', _])) {
+        return addSentece(`destruct ${p.label[0]}`);
+      }
+      return swal({
+        text: g`no_action_for_hyp`,
+        icon: 'error',
+      });
     });
     elem.addEventListener('contextmenu', async (ev) => {
       let items = undefined;
@@ -217,6 +230,15 @@ const setupOnClick = () => {
             action: () => addSentece(`induction ${l}`),
           }));
         }
+        if (match(p.tree, [['∀', _], _, _])) {
+          items = [{
+            label: g`tactic_subst`,
+            action: () => {
+              const term = window.prompt('Your goal:');
+              addSentece(`pose proof (${p.label[0]} (${term}))`);
+            },
+          }];
+        }
         if (!items) {
           items = [
             {
@@ -225,6 +247,10 @@ const setupOnClick = () => {
             },
           ];
         }
+        items.push({
+          label: g`tactic_revert`,
+          action: () => addSentece(`revert ${p.label[0]}`),
+        });
       }
       items.push({
         label: 'print tree',

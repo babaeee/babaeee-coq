@@ -29,8 +29,18 @@ const main = async () => {
   const root = new RootCtrl();
   document.body.appendChild(root.el);
   await coqInit();
+  await libs.Prelude.require();
   await libs.Arith.require();
-  await addSentece('Goal forall n m:nat, odd (n + m) -> even n /\\ odd m \\/ odd n /\\ even m');
+  await libs.Set.require();
+  const hstring = window.localStorage.getItem('history');
+  if (hstring) {
+    const history = JSON.parse(hstring);
+    for (const x of history) {
+      await addSentece(x);
+    }
+  } else {
+    await addSentece('Goal ~ Finite Prime');
+  }
   //await addSentece('Proof. intros. classical_right.pose proof (not_and_or).pose proof (not_even).pose proof (not_odd).');
 };
 

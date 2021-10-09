@@ -11,6 +11,7 @@ export const HistoryCtrl = class {
 
   update(history) {
     this.body.innerHTML = '';
+    window.localStorage.setItem('history', JSON.stringify(history));
     for (const x of history) {
       this.body.appendChild(createNode('li', {}, x));
     }

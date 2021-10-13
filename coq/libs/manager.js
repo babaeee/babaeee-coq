@@ -1,6 +1,8 @@
 import { addLemmas, addSentece } from "../../util/coq/index.js";
 import Arith from "./Arith.v";
+import Classic from "./Classic.v";
 import Set from "./Set.v";
+import Pre_lemma from "./Pre_lemma.v";
 import Prelude from "./Prelude.v";
 import Items from "./items.yml";
 

@@ -25,4 +25,4 @@ const generateLibraries = (obj) => {
   return obj;
 };
 
-export const libs = generateLibraries({ Arith, Set, Prelude });
+export const libs = generateLibraries({ Arith, Classic, Set, Pre_lemma, Prelude });

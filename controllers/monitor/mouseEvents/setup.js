@@ -175,6 +175,9 @@ const setupOnClick = () => {
         if (match(p.tree, ['~', _])) {
           return addSentece(`unfold not; intros`);
         }
+        if(match(p.tree, [_,"→",_])) {
+          return addSentece("intros");
+        }
         return swal({
           text: g`no_action_for_goal`,
           icon: 'error',
@@ -250,6 +253,10 @@ const setupOnClick = () => {
         items.push({
           label: g`tactic_revert`,
           action: () => addSentece(`revert ${p.label[0]}`),
+        });
+       items.push({
+          lable: g`tactic_delete`,
+          action: () => addSentece(`clear ${p.label[0]}`),
         });
       }
       items.push({

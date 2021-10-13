@@ -31,7 +31,9 @@ const main = async () => {
   await coqInit();
   await libs.Prelude.require();
   await libs.Arith.require();
+  await libs.Classic.require();
   await libs.Set.require();
+  await libs.Pre_lemma.require();
   const hstring = window.localStorage.getItem('history');
   if (hstring) {
     const history = JSON.parse(hstring);

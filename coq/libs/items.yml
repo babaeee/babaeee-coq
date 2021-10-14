@@ -1,11 +1,5 @@
-Arith:
-  - odd_to_even
-  - even_0
-  - odd_1
-  - divide_plus
-  - divide_1
-Set:
-  - prime_2
-  - prime_def
-  - multi_odd
+Arith: []
+Classic: []
+Set: []
+Pre_lemma: []
 Prelude: []

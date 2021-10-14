@@ -40,12 +40,14 @@ const main = async () => {
   const hstring = window.localStorage.getItem('history');
   if (hstring) {
     const history = JSON.parse(hstring);
-    for (const x of history) {
-      await addSentece(x);
+    if (history.length !== 0) {
+      for (const x of history) {
+        await addSentece(x);
+      }
+      return;
     }
-  } else {
-    await addSentece('Goal ~ Finite Prime');
   }
+  await addSentece('Goal ~ Finite _ Prime');
   //await addSentece('Proof. intros. classical_right.pose proof (not_and_or).pose proof (not_even).pose proof (not_odd).');
 };
 

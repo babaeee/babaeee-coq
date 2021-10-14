@@ -9,8 +9,8 @@ import Items from "./items.yml";
 function generateLibraries(obj) {
   const libNames = Object.keys(obj);
   for (const name of libNames) {
-    const text = obj[name];
-    const sentences = text.split(/.\w*/g).map((x) => x.trim()).filter((x) => x != '');
+    const text = obj[name] + "\n";
+    const sentences = text.split(/\.\s*\n\s*/g).map((x) => x.trim()).filter((x) => x != '');
     obj[name] = {
       require: async () => {
         for (const sentence of sentences) {

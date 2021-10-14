@@ -45,12 +45,9 @@ export const coqManager = async () => {
       this._ready();
     }
     coqGoalInfo(sid, goals) {
-      var bar = `\n${"-".repeat(60)}\n`;
-      console.log(bar, goals, bar);
       emit('goal', goals);
     }
     coqFeedback(...args) {
-      console.log(...args);
     }
     coqCoqExn(loc, sids, msg) {
       emit('exn', msg);
@@ -80,7 +77,6 @@ export const coqManager = async () => {
       var cleanup = () => {};
 
       if (pkg_deps.length > 0) {
-        console.log("MyPending: loading packages", pkg_deps);
         this.disable();
         this.pm.expand();
         cleanup = () => {

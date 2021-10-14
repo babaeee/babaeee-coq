@@ -6,7 +6,7 @@ import Pre_lemma from "./Pre_lemma.v";
 import Prelude from "./Prelude.v";
 import Items from "./items.yml";
 
-const generateLibraries = (obj) => {
+function generateLibraries(obj) {
   const libNames = Object.keys(obj);
   for (const name of libNames) {
     const text = obj[name];
@@ -23,6 +23,6 @@ const generateLibraries = (obj) => {
     };
   }
   return obj;
-};
+}
 
 export const libs = generateLibraries({ Arith, Classic, Set, Pre_lemma, Prelude });

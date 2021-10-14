@@ -10,6 +10,7 @@ let pprint;
 let readyPromise;
 let history = [];
 let lemmas = [];
+let lastSentence;
 
 export const goalsToDOM = (goals) => {
   if (!goals) return [createNode('div', {}, 'error')];
@@ -142,6 +143,7 @@ export const coqInit = () => {
 };
 
 export const addSentece = async (sentence, options = {}) => {
+  lastSentence = sentence;
   if (!options.isLib) {
     pushHistory(sentence);
   }
@@ -150,6 +152,10 @@ export const addSentece = async (sentence, options = {}) => {
   coq.add(globalObj.sid - 1, globalObj.sid, sentence + '.');
   await coq.execPromise(globalObj.sid);
   coq.goals(globalObj.sid);
+};
+
+export const getLastSentence = () => {
+  return lastSentence;
 };
 
 export const addLemmas = (list) => {

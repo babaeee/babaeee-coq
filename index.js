@@ -1,6 +1,6 @@
 import { RootCtrl } from "./controllers/root/root.js";
 import { isRTL } from "./i18n/index.js";
-import { addSentece, coqInit, coqManager, ppToDOM, subscribe } from "./util/coq/index.js";
+import { addSentece, coqInit, getLastSentence, ppToDOM, subscribe } from "./util/coq/index.js";
 
 import "./css/coq.notmodule.css";
 import "./css/theme.notmodule.css";
@@ -21,6 +21,9 @@ const main = async () => {
     for (const x of ppToDOM(pp)) {
       c.appendChild(x);
     }
+    const p = createNode('p');
+    p.innerText = `Caused by: ${getLastSentence()}`;
+    c.appendChild(p);
     await swal({
       content: c,
       icon: 'error',

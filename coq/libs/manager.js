@@ -10,7 +10,7 @@ const generateLibraries = (obj) => {
   const libNames = Object.keys(obj);
   for (const name of libNames) {
     const text = obj[name];
-    const sentences = text.split('.\n').map((x) => x.trim()).filter((x) => x != '');
+    const sentences = text.split(/.\w*/g).map((x) => x.trim()).filter((x) => x != '');
     obj[name] = {
       require: async () => {
         for (const sentence of sentences) {
@@ -18,7 +18,7 @@ const generateLibraries = (obj) => {
             isLib: true,
           });
         }
-        addLemmas(Items[name]);
+        addLemmas(Items[name] ?? []);
       },
     };
   }
